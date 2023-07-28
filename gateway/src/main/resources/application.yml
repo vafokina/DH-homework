@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: auth
+          uri: localhost:8081/auth
+          predicates:
+            - Path=/auth
+
+        - id: baeldung
+          uri: localhost:8081/auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+            - PreAuthorize=hasAuthority('MANAGER')
+        - id: myOtherRouting
+          uri: localhost:9999

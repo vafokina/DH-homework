@@ -1,0 +1,15 @@
+# https://hub.docker.com/r/bitnami/consul/
+version: '3'
+
+services:
+  consul:
+    image: docker.io/bitnami/consul:latest
+    volumes:
+      - consul_data:/bitnami/consul
+    ports:
+      - '8300:8300'
+      - '8301:8301'
+      - '8301:8301/udp'
+      - '8500:8500'
+      - '8600:8600'
+      - '8600:8600/udp'

@@ -1,15 +1,47 @@
 version: '3'
 services:
   postgresql:
-    image: postgres:13
-    volumes:
-      - hw_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=hw_db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    ports:
-      - 5434:5432
+    extends:
+      file: postgres/docker-compose.yml
+      service: postgresql
+  keycloak-postgresql:
+    extends:
+      file: keycloak-postgres/docker-compose.yml
+      service: keycloak-postgresql
+  consul:
+    extends:
+      file: consul/docker-compose.yml
+      service: consul
+  keycloak:
+    extends:
+      file: keycloak/docker-compose.yml
+      service: keycloak
+    depends_on:
+      - keycloak-postgresql
+
+#  vault:
+#    extends:
+#      file: vault/docker-compose.yml
+#      service: vault
+#  vault-init:
+#    extends:
+#      file: vault/vault-init.yml
+#      service: vault-init
+#    depends_on:
+#      - vault
 
 volumes:
-  hw_data:
+  postgresql_data:
+    name: dh-homework_postgresql_data
+    driver: local
+  keycloak_postgresql_data:
+    name: dh-homework_keycloak_postgresql_data
+    driver: local
+  consul_data:
+    name: dh-homework_consul_data
+    driver: local
+
+networks:
+  default:
+    name: dh-homework
+    driver: bridge

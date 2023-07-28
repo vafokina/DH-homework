@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:17.0.1-legacy
+    command: [ "-Djboss.socket.binding.port-offset=13" ]
+    volumes:
+      - ./realm.json:/realm.json
+    environment:
+      PROXY_ADDRESS_FORWARDING: "true"
+      DB_VENDOR: POSTGRES
+      DB_ADDR: keycloak-postgresql
+      DB_DATABASE: keycloak
+      DB_USER: postgres
+      DB_SCHEMA: public
+      DB_PASSWORD: postgres
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: adminka
+      KEYCLOAK_IMPORT: /realm.json
+    ports:
+      - 8093:8093

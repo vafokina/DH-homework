@@ -1,1 +1,5 @@
 rootProject.name = 'homework'
+
+include 'auth'
+include 'bid'
+include 'gateway'
