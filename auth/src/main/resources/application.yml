@@ -9,13 +9,20 @@ spring:
       client:
         registration:
           keycloak:
-            client-id: auth-service
+            client-id: ${keycloak.clientId}
             authorization-grant-type: authorization_code
             scope: openid
         provider:
           keycloak:
-            issuer-uri: http://localhost:8093/auth/realms/dh
+            issuer-uri: ${keycloak.authServerUrl}/realms/${keycloak.realm}
             user-name-attribute: preferred_username
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8094/auth/realms/dh
+          issuer-uri: ${keycloak.authServerUrl}/realms/${keycloak.realm}
+
+keycloak:
+  authServerUrl: http://localhost:8093/auth
+  realm: dh
+  clientId: auth-service
+  credentials:
+    secret: 37qajpFSzTw02Ao1r6Baa1qASqwY8STU

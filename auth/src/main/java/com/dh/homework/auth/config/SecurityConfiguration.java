@@ -1,7 +1,6 @@
 package com.dh.homework.auth.config;
 
 import com.dh.homework.auth.security.KeycloakLogoutHandler;
-import javax.sql.DataSource;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -10,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
@@ -30,10 +30,12 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(registry -> registry
-                .requestMatchers("/auth/token*").anonymous()
-                .anyRequest().authenticated()
-        )
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(registry -> registry
+                        .requestMatchers("/auth").authenticated()
+                        .anyRequest().permitAll()
+                )
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer -> {})
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.addLogoutHandler(keycloakLogoutHandler))
                 .oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer ->

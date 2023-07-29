@@ -32,6 +32,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.keycloak:keycloak-authz-client:17.0.1")
 
 //    implementation("org.springframework.security.oauth:spring-security-oauth2:2.5.2.RELEASE")
 
