@@ -1,5 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/migrations/empty.yaml
-#  - include:
-#      file: db/changelog/migrations/initial.yaml
+  - include:
+      file: db/changelog/migrations/credit-bid.yaml
